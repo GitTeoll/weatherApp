@@ -5,6 +5,7 @@ void main() {
   runApp(ProviderScope(child: WeatherApp()));
 }
 
+//메인 브랜치 분기
 class WeatherApp extends StatelessWidget {
   const WeatherApp({super.key});
 
