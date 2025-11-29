@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// branch - feature/weather-app
+import 'package:weather_app/routers/app_router.dart';
 
 void main() {
   runApp(ProviderScope(child: WeatherApp()));
@@ -11,6 +11,6 @@ class WeatherApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return MaterialApp.router(routerConfig: appRouter);
   }
 }
