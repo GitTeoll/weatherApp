@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:weather_app/common/weather_to_icon.dart';
+import 'package:weather_app/common/weather_to_string.dart';
 import 'package:weather_app/model/current_weather.dart';
 import 'package:weather_app/providers/current_weather_provider.dart';
 import 'package:weather_app/widgets/weather_refresh.dart';
@@ -37,7 +39,7 @@ class _CurrentWeatherHeaderState extends ConsumerState<CurrentWeatherHeader> {
           Row(
             children: [
               Icon(
-                Icons.cloud,
+                weatherToIcon(widget.weather.weatherCode.toInt()),
                 size: 70,
                 color: Colors.white,
               ), //현재 날씨에 따른 날씨 아이콘 <<상태변화 필요>>
@@ -53,8 +55,8 @@ class _CurrentWeatherHeaderState extends ConsumerState<CurrentWeatherHeader> {
                           style: TextStyle(fontSize: 40, color: Colors.white),
                         ),
                         Text(
-                          "It's Cloudy Day",
-                          style: TextStyle(fontSize: 16, color: Colors.white70),
+                          weatherToString(widget.weather.weatherCode.toInt()),
+                          style: TextStyle(fontSize: 16, color: Colors.white),
                         ),
                       ],
                     ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:weather_app/common/weather_to_description.dart';
 import 'package:weather_app/model/current_weather.dart';
 import 'package:weather_app/providers/provider.dart';
 
@@ -38,7 +39,9 @@ class _WeatherInformationState extends ConsumerState<WeatherInformation> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  "흐린날씨가 예상됩니다. 우산을 챙기세요!", //날씨에 따라 동적으로 텍스트 변결 필요
+                  weatherToDescription(
+                    widget.weather.weatherCode.toInt(),
+                  ), //날씨에 따라 동적으로 텍스트 변결 필요
                   style: TextStyle(
                     color: Colors.black.withValues(alpha: .8),
                     fontSize: 14,
