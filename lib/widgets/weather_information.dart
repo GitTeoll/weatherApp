@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:weather_app/model/current_weather.dart';
 import 'package:weather_app/providers/provider.dart';
 
 class WeatherInformation extends ConsumerStatefulWidget {
-  const WeatherInformation({super.key});
+  final CurrentWeather weather;
+  const WeatherInformation({super.key, required this.weather});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -91,11 +93,20 @@ class _WeatherInformationState extends ConsumerState<WeatherInformation> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  RealfeelHumidityWind(label: "체감온도", value: "31°"),
+                  RealfeelHumidityWind(
+                    label: "체감온도",
+                    value: "${widget.weather.realFeel}°",
+                  ),
                   VerticalDivider(thickness: 1, width: 2, color: Colors.black),
-                  RealfeelHumidityWind(label: "습도", value: "78%"),
+                  RealfeelHumidityWind(
+                    label: "습도",
+                    value: "${widget.weather.relativeHumidity}%",
+                  ),
                   VerticalDivider(thickness: 1, width: 2, color: Colors.black),
-                  RealfeelHumidityWind(label: "바람", value: "15 km/h"),
+                  RealfeelHumidityWind(
+                    label: "바람",
+                    value: "${widget.weather.windSpeed} m/s",
+                  ),
                 ],
               ),
             ),

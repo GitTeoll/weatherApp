@@ -2,10 +2,13 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:weather_app/model/current_weather.dart';
+import 'package:weather_app/providers/current_weather_provider.dart';
 import 'package:weather_app/widgets/weather_refresh.dart';
 
 class CurrentWeatherHeader extends ConsumerStatefulWidget {
-  const CurrentWeatherHeader({super.key});
+  final CurrentWeather weather;
+  const CurrentWeatherHeader({super.key, required this.weather});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -46,7 +49,7 @@ class _CurrentWeatherHeaderState extends ConsumerState<CurrentWeatherHeader> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Text(
-                          '25°',
+                          '${widget.weather.temp}°',
                           style: TextStyle(fontSize: 40, color: Colors.white),
                         ),
                         Text(
@@ -67,7 +70,7 @@ class _CurrentWeatherHeaderState extends ConsumerState<CurrentWeatherHeader> {
                     ),
                   ],
                 ),
-              ), //현재 온도 <<상태변화 필요>>
+              ),
             ],
           ),
         ],
