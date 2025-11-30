@@ -4,6 +4,7 @@ import 'package:weather_app/routers/app_router.dart';
 
 void main() {
   runApp(ProviderScope(child: WeatherApp()));
+  print(DateTime.now().hour);
 }
 
 class WeatherApp extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:weather_app/model/current_weather.dart';
+import 'package:weather_app/model/weather.dart';
 import 'package:weather_app/sevices/weather_api_service.dart';
 
 final weatherApiServiceProvider = Provider<WeatherApiService>((ref) {
@@ -7,7 +7,7 @@ final weatherApiServiceProvider = Provider<WeatherApiService>((ref) {
   return WeatherApiService(latitude: 37.5665, longitude: 126.9780);
 });
 
-final currentWeatherProvider = FutureProvider<CurrentWeather>((ref) async {
+final WeatherProvider = FutureProvider<Weather>((ref) async {
   final weatherApiService = ref.watch(weatherApiServiceProvider);
-  return weatherApiService.fetchCurrentWeather();
+  return weatherApiService.fetchWeather();
 });

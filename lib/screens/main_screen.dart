@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:weather_app/model/current_weather.dart';
-import 'package:weather_app/providers/current_weather_provider.dart';
+import 'package:weather_app/model/weather.dart';
+import 'package:weather_app/providers/weather_provider.dart';
 import 'package:weather_app/widgets/current_weather_header.dart';
 import 'package:weather_app/widgets/weather_information.dart';
 
@@ -15,7 +15,7 @@ class MainScreen extends ConsumerStatefulWidget {
 class _MainScreen extends ConsumerState<MainScreen> {
   @override
   Widget build(BuildContext context) {
-    final weatherAsync = ref.watch(currentWeatherProvider);
+    final weatherAsync = ref.watch(WeatherProvider);
 
     return Scaffold(
       backgroundColor: const Color(0xFF5CA1DF),
@@ -39,7 +39,7 @@ class _MainScreen extends ConsumerState<MainScreen> {
 class MainPage extends StatelessWidget {
   const MainPage({super.key, required this.weather});
 
-  final CurrentWeather weather;
+  final Weather weather;
 
   @override
   Widget build(BuildContext context) {

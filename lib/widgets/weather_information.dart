@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weather_app/common/weather_to_description.dart';
-import 'package:weather_app/model/current_weather.dart';
-import 'package:weather_app/providers/provider.dart';
+import 'package:weather_app/common/weather_to_icon.dart';
+import 'package:weather_app/model/weather.dart';
 
 class WeatherInformation extends ConsumerStatefulWidget {
-  final CurrentWeather weather;
+  final Weather weather;
   const WeatherInformation({super.key, required this.weather});
 
   @override
@@ -17,7 +17,6 @@ class _WeatherInformationState extends ConsumerState<WeatherInformation> {
   @override
   Widget build(BuildContext context) {
     //hourlyWeatherNotifire 프로바이더를 사용하여 시간별 날씨 데이터를 가져옴<현재 더미데이터 사용중>
-    final hourlyWeather = ref.watch(hourlyWeatherNotifire);
 
     return Container(
       decoration: BoxDecoration(
@@ -40,7 +39,7 @@ class _WeatherInformationState extends ConsumerState<WeatherInformation> {
               children: [
                 Text(
                   weatherToDescription(
-                    widget.weather.weatherCode.toInt(),
+                    widget.weather.currentWeather.weatherCode.toInt(),
                   ), //날씨에 따라 동적으로 텍스트 변결 필요
                   style: TextStyle(
                     color: Colors.black.withValues(alpha: .8),
@@ -70,19 +69,26 @@ class _WeatherInformationState extends ConsumerState<WeatherInformation> {
                 padding: const EdgeInsets.all(8.0),
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: hourlyWeather.length, //hourlyWeather의 리스트 개수
+                  itemCount: 72, //hourlyWeather의 리스트 개수를 3일로 설정(72시간)
                   itemBuilder: (context, index) {
-                    final item = hourlyWeather[index];
+                    //파싱하는 경우 당일00시부터 시작하므로 현재시간에 맞춰줌
+                    index = index + DateTime.now().hour;
                     return Padding(
                       //리스트뷰 내 아이템 간의 패딩 설정
                       padding: EdgeInsets.only(right: 14.0),
                       child: Column(
                         children: [
-                          Text(item.time),
+                          Text(
+                            setTime(widget.weather.hourlyWeather.time[index]),
+                          ),
                           SizedBox(height: 8),
-                          Icon(item.icon),
+                          Icon(
+                            weatherToIcon(
+                              widget.weather.hourlyWeather.weatherCode[index],
+                            ),
+                          ),
                           SizedBox(height: 8),
-                          Text("${item.temp}°"),
+                          Text("${widget.weather.hourlyWeather.temp[index]}°"),
                         ],
                       ),
                     );
@@ -98,17 +104,17 @@ class _WeatherInformationState extends ConsumerState<WeatherInformation> {
                 children: [
                   RealfeelHumidityWind(
                     label: "체감온도",
-                    value: "${widget.weather.realFeel}°",
+                    value: "${widget.weather.currentWeather.realFeel}°",
                   ),
                   VerticalDivider(thickness: 1, width: 2, color: Colors.black),
                   RealfeelHumidityWind(
                     label: "습도",
-                    value: "${widget.weather.relativeHumidity}%",
+                    value: "${widget.weather.currentWeather.relativeHumidity}%",
                   ),
                   VerticalDivider(thickness: 1, width: 2, color: Colors.black),
                   RealfeelHumidityWind(
                     label: "바람",
-                    value: "${widget.weather.windSpeed} m/s",
+                    value: "${widget.weather.currentWeather.windSpeed} m/s",
                   ),
                 ],
               ),
@@ -134,4 +140,10 @@ class RealfeelHumidityWind extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(children: [Text(label), SizedBox(height: 4), Text(value)]);
   }
+}
+
+String setTime(String dateTime) {
+  final timePart = dateTime.split("T")[1];
+  final onlyTime = timePart.split(":")[0];
+  return "$onlyTime시";
 }
