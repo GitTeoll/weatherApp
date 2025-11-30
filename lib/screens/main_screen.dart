@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weather_app/widgets/current_weather_header.dart';
+import 'package:weather_app/widgets/weather_information.dart';
 
 class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({super.key});
@@ -23,7 +24,13 @@ class _MainScreen extends ConsumerState<MainScreen> {
             30,
             0.0,
           ), //메인스크인 전체의 좌우패딩 30 설정
-          child: Column(children: [CurrentWeatherHeader()]),
+          child: Column(
+            children: [
+              CurrentWeatherHeader(),
+              SizedBox(height: 30),
+              WeatherInformation(),
+            ],
+          ),
         ),
       ),
     );
