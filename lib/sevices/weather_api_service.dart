@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:weather_app/model/current_weather.dart';
+import 'package:weather_app/model/daily_weather.dart';
 import 'package:weather_app/model/hourly_weather.dart';
 import 'package:weather_app/model/weather.dart';
 
@@ -26,11 +27,13 @@ class WeatherApiService {
     //이 클래스는 현재 날씨정보만을 필요로 하므로 json에서 current 부분만 파싱합니다.
     final currentJson = response.data['current'];
     final hourlyJson = response.data['hourly'];
+    final dailyJson = response.data['daily'];
 
-    //이후 파싱한 부분을 CurrentWeather 모델로 변환하여 반환합니다.
+    //이후 파싱한 부분을 Weather 모델로 변환하여 반환합니다.
     return Weather(
       currentWeather: CurrentWeather.fromJson(currentJson),
       hourlyWeather: HourlyWeather.fromJson(hourlyJson),
+      dailyWeather: DailyWeather.fromJson(dailyJson),
     );
   }
 }

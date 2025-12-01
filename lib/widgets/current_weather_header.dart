@@ -1,10 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weather_app/common/weather_to_icon.dart';
 import 'package:weather_app/common/weather_to_string.dart';
 import 'package:weather_app/model/weather.dart';
+import 'package:weather_app/providers/weather_provider.dart';
 import 'package:weather_app/widgets/weather_refresh.dart';
 
 class CurrentWeatherHeader extends ConsumerStatefulWidget {
@@ -68,7 +67,7 @@ class _CurrentWeatherHeaderState extends ConsumerState<CurrentWeatherHeader> {
                       children: [
                         CurrentDateTimeRow(
                           onRefresh: () {
-                            log('Weather data refreshed');
+                            ref.refresh(WeatherProvider);
                           },
                         ),
                       ],

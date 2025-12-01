@@ -4,6 +4,7 @@ import 'package:weather_app/model/weather.dart';
 import 'package:weather_app/providers/weather_provider.dart';
 import 'package:weather_app/widgets/current_weather_header.dart';
 import 'package:weather_app/widgets/weather_information.dart';
+import 'package:weather_app/widgets/weekly_forecast.dart';
 
 class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({super.key});
@@ -52,6 +53,8 @@ class MainPage extends StatelessWidget {
             CurrentWeatherHeader(weather: weather),
             SizedBox(height: 30),
             WeatherInformation(weather: weather),
+            SizedBox(height: 30),
+            WeeklyForecast(weather: weather),
           ],
         ),
       ),
