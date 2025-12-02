@@ -20,7 +20,7 @@ class WeatherApiService {
         '&daily=weather_code,temperature_2m_max,temperature_2m_min'
         '&hourly=temperature_2m,weather_code'
         '&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m'
-        'timezone=auto&wind_speed_unit=ms';
+        '&timezone=Asia/Tokyo&wind_speed_unit=ms';
     //위 url으로부터 response를 받아옵니다.
     final response = await _dio.get(url);
 

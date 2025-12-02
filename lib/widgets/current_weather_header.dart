@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weather_app/common/weather_to_icon.dart';
 import 'package:weather_app/common/weather_to_string.dart';
+import 'package:weather_app/model/current_weather.dart';
 import 'package:weather_app/model/weather.dart';
 import 'package:weather_app/providers/weather_provider.dart';
 import 'package:weather_app/widgets/weather_refresh.dart';
@@ -18,6 +21,8 @@ class CurrentWeatherHeader extends ConsumerStatefulWidget {
 class _CurrentWeatherHeaderState extends ConsumerState<CurrentWeatherHeader> {
   @override
   Widget build(BuildContext context) {
+    final weatherProvider = ref.watch(WeatherProvider);
+
     return Container(
       // decoration: BoxDecoration(
       //   color: Colors.blueAccent,
@@ -62,16 +67,7 @@ class _CurrentWeatherHeaderState extends ConsumerState<CurrentWeatherHeader> {
                         ),
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        CurrentDateTimeRow(
-                          onRefresh: () {
-                            ref.refresh(WeatherProvider);
-                          },
-                        ),
-                      ],
-                    ),
+                    RefreshRow(weatherProvider: weatherProvider, ref: ref),
                   ],
                 ),
               ),
@@ -81,4 +77,60 @@ class _CurrentWeatherHeaderState extends ConsumerState<CurrentWeatherHeader> {
       ),
     );
   }
+}
+
+class RefreshRow extends StatelessWidget {
+  const RefreshRow({
+    super.key,
+    required this.weatherProvider,
+    required this.ref,
+  });
+
+  final AsyncValue<Weather> weatherProvider;
+  final WidgetRef ref;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        weatherProvider.when(
+          data: (weather) {
+            return Text(
+              SplitString(weather.currentWeather.time),
+              style: TextStyle(color: Colors.white),
+            );
+          },
+          error: (e, st) {
+            return Text("errorcode $e", style: TextStyle(color: Colors.white));
+          },
+          loading: () {
+            return CircularProgressIndicator();
+          },
+        ),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.transparent,
+            shadowColor: Colors.transparent,
+            elevation: 0,
+          ),
+          onPressed: () {
+            ref.invalidate(WeatherProvider);
+          },
+          child: Icon(Icons.refresh_rounded, color: Colors.black),
+        ),
+      ],
+    );
+  }
+}
+
+String SplitString(String data) {
+  final String year = data.substring(0, 4);
+  final String month = data.substring(5, 7);
+  final String date = data.substring(8, 10);
+  final String hour = data.substring(11, 13);
+  final String minute = data.substring(14);
+
+  final String result = "업데이트 $month.$date $hour:$minute";
+  return result;
 }

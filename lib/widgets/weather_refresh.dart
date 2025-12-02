@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:weather_app/model/weather.dart';
 
-class CurrentDateTimeRow extends StatelessWidget {
+class RefreshTime extends StatelessWidget {
+  final String time;
   final VoidCallback onRefresh;
 
-  const CurrentDateTimeRow({super.key, required this.onRefresh});
+  const RefreshTime({super.key, required this.onRefresh, required this.time});
 
   // 현재 날짜 포맷
   String _formattedDate() {
@@ -18,10 +20,7 @@ class CurrentDateTimeRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          _formattedDate(),
-          style: TextStyle(fontSize: 13, color: Colors.white),
-        ),
+        Text(time, style: TextStyle(fontSize: 13, color: Colors.white)),
         const SizedBox(width: 8),
         GestureDetector(
           onTap: onRefresh,

@@ -20,4 +20,7 @@ class Weather {
       dailyWeather: DailyWeather.fromJson(json['daily']),
     );
   }
+  CurrentWeather getCurrentWeather() {
+    return currentWeather;
+  }
 }
