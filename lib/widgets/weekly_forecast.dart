@@ -17,8 +17,19 @@ class _WeeklyForecastState extends ConsumerState<WeeklyForecast> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: .8),
+        color: Colors.white.withOpacity(0.08), // 아주 옅은 하얀 투명도
         borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: Colors.white.withOpacity(0.12), // 약간의 테두리
+          width: 0.8,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.15),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
+          ),
+        ],
       ),
       width: double.infinity,
 
@@ -42,7 +53,10 @@ class _WeeklyForecastState extends ConsumerState<WeeklyForecast> {
                         index == 0
                             ? '오늘'
                             : "${DateFormat.E('ko-KR').format(DateTime.parse(widget.weather.dailyWeather.time[index]))}     ",
-                        style: TextStyle(fontSize: 15),
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.white.withValues(alpha: .8),
+                        ),
                       ),
                       SizedBox(width: 20),
                       Icon(
@@ -50,11 +64,14 @@ class _WeeklyForecastState extends ConsumerState<WeeklyForecast> {
                           widget.weather.dailyWeather.weatherCode[index]
                               .toInt(),
                         ),
-                        color: Colors.black,
+                        color: Colors.white.withValues(alpha: .8),
                         size: 25,
                       ),
                       Text(
                         '${widget.weather.dailyWeather.tempMax[index]}° / ${widget.weather.dailyWeather.tempMin[index]}°',
+                        style: TextStyle(
+                          color: Colors.white.withValues(alpha: .8),
+                        ),
                       ),
                     ],
                   ),

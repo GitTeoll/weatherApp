@@ -1,13 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weather_app/common/weather_to_icon.dart';
 import 'package:weather_app/common/weather_to_string.dart';
-import 'package:weather_app/model/current_weather.dart';
 import 'package:weather_app/model/weather.dart';
 import 'package:weather_app/providers/weather_provider.dart';
-import 'package:weather_app/widgets/weather_refresh.dart';
 
 class CurrentWeatherHeader extends ConsumerStatefulWidget {
   final Weather weather;
@@ -24,10 +20,6 @@ class _CurrentWeatherHeaderState extends ConsumerState<CurrentWeatherHeader> {
     final weatherProvider = ref.watch(WeatherProvider);
 
     return Container(
-      // decoration: BoxDecoration(
-      //   color: Colors.blueAccent,
-      //   borderRadius: BorderRadius.circular(20),
-      // ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

@@ -20,9 +20,19 @@ class _WeatherInformationState extends ConsumerState<WeatherInformation> {
 
     return Container(
       decoration: BoxDecoration(
-        //전체 컨테이너의 스타일 설정
-        color: Colors.white.withValues(alpha: .8),
+        color: Colors.white.withOpacity(0.08), // 아주 옅은 하얀 투명도
         borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: Colors.white.withOpacity(0.12), // 약간의 테두리
+          width: 0.8,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.15),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
+          ),
+        ],
       ),
       width: double.infinity,
       child: Padding(
@@ -42,7 +52,7 @@ class _WeatherInformationState extends ConsumerState<WeatherInformation> {
                     widget.weather.currentWeather.weatherCode.toInt(),
                   ), //날씨에 따라 동적으로 텍스트 변결 필요
                   style: TextStyle(
-                    color: Colors.black.withValues(alpha: .8),
+                    color: Colors.white.withValues(alpha: .8),
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                   ),
@@ -80,15 +90,24 @@ class _WeatherInformationState extends ConsumerState<WeatherInformation> {
                         children: [
                           Text(
                             setTime(widget.weather.hourlyWeather.time[index]),
+                            style: TextStyle(
+                              color: Colors.white.withValues(alpha: .8),
+                            ),
                           ),
                           SizedBox(height: 8),
                           Icon(
                             weatherToIcon(
                               widget.weather.hourlyWeather.weatherCode[index],
                             ),
+                            color: Colors.white.withValues(alpha: .8),
                           ),
                           SizedBox(height: 8),
-                          Text("${widget.weather.hourlyWeather.temp[index]}°"),
+                          Text(
+                            "${widget.weather.hourlyWeather.temp[index]}°",
+                            style: TextStyle(
+                              color: Colors.white.withValues(alpha: .8),
+                            ),
+                          ),
                         ],
                       ),
                     );
@@ -106,12 +125,20 @@ class _WeatherInformationState extends ConsumerState<WeatherInformation> {
                     label: "체감온도",
                     value: "${widget.weather.currentWeather.realFeel}°",
                   ),
-                  VerticalDivider(thickness: 1, width: 2, color: Colors.black),
+                  VerticalDivider(
+                    thickness: 1,
+                    width: 2,
+                    color: Colors.white.withValues(alpha: .8),
+                  ),
                   RealfeelHumidityWind(
                     label: "습도",
                     value: "${widget.weather.currentWeather.relativeHumidity}%",
                   ),
-                  VerticalDivider(thickness: 1, width: 2, color: Colors.black),
+                  VerticalDivider(
+                    thickness: 1,
+                    width: 2,
+                    color: Colors.white.withValues(alpha: .8),
+                  ),
                   RealfeelHumidityWind(
                     label: "바람",
                     value: "${widget.weather.currentWeather.windSpeed} m/s",
@@ -138,7 +165,19 @@ class RealfeelHumidityWind extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [Text(label), SizedBox(height: 4), Text(value)]);
+    return Column(
+      children: [
+        Text(
+          label,
+          style: TextStyle(color: Colors.white.withValues(alpha: .8)),
+        ),
+        SizedBox(height: 4),
+        Text(
+          value,
+          style: TextStyle(color: Colors.white.withValues(alpha: .8)),
+        ),
+      ],
+    );
   }
 }
 
